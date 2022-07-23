@@ -27,6 +27,12 @@ body {
   &__items {
     display: flex;
     flex-wrap: wrap;
+    & > svg {
+      margin-bottom: 65px;
+      &:not(:nth-of-type(4n)) {
+        margin-right: 35px;
+      }
+    }
   }
 
   &__top {

@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
 
-const PizzaBlock = ({
-  pizzaImage,
-  pizzaTitle,
-  pizzaPrice,
-  pizzaType,
-  pizzaSize,
-  pizzaCategory,
-  pizzaRating,
-}) => {
+const PizzaBlock = ({ imageUrl, title, types, sizes, price, category, rating }) => {
   const typeNames = ['тонкое', 'традиционное'];
 
   const [type, setType] = useState(0);
@@ -16,11 +8,11 @@ const PizzaBlock = ({
 
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={pizzaImage} alt="Pizza" />
-      <h4 className="pizza-block__title">{pizzaTitle}</h4>
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+      <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {pizzaType.map((typeId, i) => (
+          {types.map((typeId, i) => (
             <li
               key={typeId}
               onClick={() => {
@@ -32,7 +24,7 @@ const PizzaBlock = ({
           ))}
         </ul>
         <ul>
-          {pizzaSize.map((sizeNum, i) => (
+          {sizes.map((sizeNum, i) => (
             <li
               key={sizeNum}
               onClick={() => {
@@ -45,7 +37,7 @@ const PizzaBlock = ({
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {pizzaPrice} ₽</div>
+        <div className="pizza-block__price">от {price} ₽</div>
         <button className="button button--outline button--add">
           <svg
             width="12"
