@@ -8,7 +8,14 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategory } from '../redux/slices/filterSilice';
+
 const Home = () => {
+  //redux-toolkit
+  const category = useSelector((state) => state.filterSilice.categoryValue);
+  const dispatch = useDispatch();
+  //
   const { searchValue } = React.useContext(SearchContext);
 
   const [items, setItems] = React.useState([]);
@@ -20,7 +27,7 @@ const Home = () => {
     name: 'популярности (убыв.)',
     sortProperty: 'rating',
   });
-  const [category, setCategory] = React.useState(0);
+  //const [category, setCategory] = React.useState(0);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -53,7 +60,7 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Category value={category} onClickCategory={(i) => setCategory(i)} />
+        <Category value={category} onClickCategory={(i) => dispatch(setCategory(i))} />
         <Sort value={sort} onClickSort={(sortObj) => setSort(sortObj)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
