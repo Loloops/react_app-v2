@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
+export const sortLists = [
+  { name: 'популярности (убыв.)', sortProperty: 'rating' },
+  { name: 'популярности (возраст.)', sortProperty: '-rating' },
+  { name: 'цене (убыв.)', sortProperty: 'price' },
+  { name: 'цене (возраст.)', sortProperty: '-price' },
+  { name: 'алфавиту (убыв.)', sortProperty: 'title' },
+  { name: 'алфавиту (возраст.)', sortProperty: '-title' },
+];
+
 const Sort = ({ value, onClickSort }) => {
   const [isVisible, setIsVisible] = useState(false);
-
-  const lists = [
-    { name: 'популярности (убыв.)', sortProperty: 'rating' },
-    { name: 'популярности (возраст.)', sortProperty: '-rating' },
-    { name: 'цене (убыв.)', sortProperty: 'price' },
-    { name: 'цене (возраст.)', sortProperty: '-price' },
-    { name: 'алфавиту (убыв.)', sortProperty: 'title' },
-    { name: 'алфавиту (возраст.)', sortProperty: '-title' },
-  ];
 
   const chooseSort = (sortProp) => {
     onClickSort(sortProp);
@@ -37,7 +37,7 @@ const Sort = ({ value, onClickSort }) => {
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {lists.map((obj, i) => (
+            {sortLists.map((obj, i) => (
               <li
                 onClick={() => chooseSort(obj)}
                 key={i}

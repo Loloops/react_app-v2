@@ -1,10 +1,34 @@
 import React from 'react';
+import lodash from 'lodash';
+
 import { SearchContext } from '../../App';
 
 import styles from './Search.module.scss';
 
 const Search = () => {
-  const { searchValue, setSearchValue } = React.useContext(SearchContext);
+  const [value, setValue] = React.useState('');
+  const { setSearchValue } = React.useContext(SearchContext);
+  const inputRef = React.useRef();
+
+  const onClickClear = () => {
+    setSearchValue('');
+    setValue('');
+    inputRef.current.focus();
+  };
+
+  const updateSearchValue = React.useCallback(
+    //вернет функцию
+    lodash.debounce((value) => {
+      console.log(value);
+      setSearchValue(value);
+    }, 700),
+    [],
+  );
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+    updateSearchValue(e.target.value);
+  };
 
   return (
     <div className={`container ${styles.root}`}>
@@ -18,15 +42,16 @@ const Search = () => {
         </svg>
 
         <input
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          value={value}
+          ref={inputRef}
+          onChange={(e) => onChangeInput(e)}
           className={styles.input}
           placeholder="Поиск пиццы..."
         />
-        {searchValue && (
+        {value && (
           <svg
             className={styles.iconClose}
-            onClick={() => setSearchValue('')}
+            onClick={onClickClear}
             version="1.1"
             viewBox="0 0 512 512"
             xmlns="http://www.w3.org/2000/svg">
