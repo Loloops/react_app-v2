@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export const sortLists = [
   { name: 'популярности (убыв.)', sortProperty: 'rating' },
@@ -10,15 +10,29 @@ export const sortLists = [
 ];
 
 const Sort = ({ value, onClickSort }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = React.useState(false);
+  const sortRef = React.useRef();
 
   const chooseSort = (sortProp) => {
     onClickSort(sortProp);
     setIsVisible(false);
   };
 
+  React.useEffect(() => {
+    const sortEvent = (event) => {
+      let path = event.path || (event.composedPath && event.composedPath());
+      if (!path.includes(sortRef.current)) {
+        setIsVisible(false);
+      }
+    };
+
+    document.body.addEventListener('click', sortEvent);
+
+    return () => document.body.removeEventListener('click', sortEvent);
+  }, []);
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
