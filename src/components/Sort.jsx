@@ -21,6 +21,7 @@ const Sort = ({ value, onClickSort }) => {
   React.useEffect(() => {
     const sortEvent = (event) => {
       let path = event.path || (event.composedPath && event.composedPath());
+
       if (!path.includes(sortRef.current)) {
         setIsVisible(false);
       }

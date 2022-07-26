@@ -26,11 +26,10 @@ const Home = () => {
     sort: state.filterSilice.sortObj,
     page: state.filterSilice.currentPage,
   }));
-  //useState
+
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  //for pagination, search
   const { searchValue } = React.useContext(SearchContext);
 
   React.useEffect(() => {
