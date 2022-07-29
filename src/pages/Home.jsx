@@ -13,6 +13,7 @@ import Sort, { sortLists } from '../components/Sort';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategory, setSort, setCurrentPage, setFilters } from '../redux/slices/filterSilice';
+import { setItems } from '../redux/slices/pizzasSlice';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -26,8 +27,11 @@ const Home = () => {
     sort: state.filterSilice.sortObj,
     page: state.filterSilice.currentPage,
   }));
+  const pizzasItems = useSelector((state) => ({
+    items: state.pizzasSlice.items,
+  }));
 
-  const [items, setItems] = React.useState([]);
+  // const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const { searchValue } = React.useContext(SearchContext);
@@ -62,7 +66,7 @@ const Home = () => {
     }
   }, []);
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
 
     const filterCategory = filter.category !== 0 ? `category=${filter.category}` : '';
@@ -70,14 +74,17 @@ const Home = () => {
     const replaceSymbolSort = filter.sort.sortProperty.replace('-', '');
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    axios
-      .get(
+    try {
+      const { data } = await axios.get(
         `https://62b6993542c6473c4b453c2a.mockapi.io/items?page=${filter.page}&limit=4&${filterCategory}&sortBy=${replaceSymbolSort}&order=${sortBy}${search}`,
-      )
-      .then((arr) => {
-        setItems(arr.data);
-        setIsLoading(false);
-      });
+      );
+
+      dispatch(setItems(data));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   React.useEffect(() => {
@@ -90,7 +97,7 @@ const Home = () => {
     isUrlSearch.current = false;
   }, [filter.category, filter.sort, searchValue, filter.page]);
 
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = pizzasItems.items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
   return (
