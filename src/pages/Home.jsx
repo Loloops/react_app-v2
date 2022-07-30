@@ -18,7 +18,6 @@ import {
   selectFilter,
 } from '../redux/slices/filterSilice';
 import { fetchPizzas, pizzasSelector } from '../redux/slices/pizzasSlice';
-import Search from '../components/Search';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -97,7 +96,6 @@ const Home = () => {
 
   return (
     <div className="container">
-      <Search />
       {status === 'error' ? (
         <div className="home-error">
           <h2>Непредвиденная ошибка или пиццы не найдены 😕</h2>

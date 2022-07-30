@@ -32,7 +32,7 @@ const Search = () => {
   };
 
   return (
-    <div className={` ${styles.root}`}>
+    <div className={`container ${styles.root}`}>
       <div className={styles.rootWrapper}>
         <svg
           className={styles.icon}
