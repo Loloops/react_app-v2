@@ -3,8 +3,6 @@ import React from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
-import { SearchContext } from '../App';
-
 import Category from '../components/Category';
 import Pagination from '../components/Pagination';
 import PizzaBlock from '../components/PizzaBlock';
@@ -12,8 +10,15 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort, { sortLists } from '../components/Sort';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategory, setSort, setCurrentPage, setFilters } from '../redux/slices/filterSilice';
-import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import {
+  setCategory,
+  setSort,
+  setCurrentPage,
+  setFilters,
+  selectFilter,
+} from '../redux/slices/filterSilice';
+import { fetchPizzas, pizzasSelector } from '../redux/slices/pizzasSlice';
+import Search from '../components/Search';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,15 +27,13 @@ const Home = () => {
   const isUrlSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const { category, page, sort } = useSelector((state) => ({
-    category: state.filterSilice.categoryValue,
-    sort: state.filterSilice.sortObj,
-    page: state.filterSilice.currentPage,
-  }));
-
-  const { items, status } = useSelector((state) => state.pizzasSlice);
-
-  const { searchValue } = React.useContext(SearchContext);
+  const {
+    categoryValue: category,
+    currentPage: page,
+    sortObj: sort,
+    searchValue,
+  } = useSelector(selectFilter);
+  const { items, status } = useSelector(pizzasSelector);
 
   React.useEffect(() => {
     if (isMounted.current) {
@@ -94,10 +97,11 @@ const Home = () => {
 
   return (
     <div className="container">
+      <Search />
       {status === 'error' ? (
-        <div class="home-error">
-          <h2>Непредвиденная ошибка😕</h2>
-          <p>Возможно технические работы на сайте, мы скоро все исправим.</p>
+        <div className="home-error">
+          <h2>Непредвиденная ошибка или пиццы не найдены 😕</h2>
+          <p>попробуйте найти что то другое или зайдите на сайт позже</p>
         </div>
       ) : (
         <>
@@ -105,6 +109,7 @@ const Home = () => {
             <Category value={category} onClickCategory={(i) => dispatch(setCategory(i))} />
             <Sort value={sort} onClickSort={(sortObj) => dispatch(setSort(sortObj))} />
           </div>
+
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
           <Pagination onChangePage={(number) => dispatch(setCurrentPage(number))} />

@@ -43,13 +43,17 @@ const cartSlice = createSlice({
 
       state.totalPrice = state.items.reduce(totalPrice, 0);
     },
-    clearItems: (state, action) => {
+    clearItems: (state) => {
       state.items = [];
-
       state.totalPrice = 0;
     },
   },
 });
+
+export const selectCart = (state) => state.cartSlice;
+export const selectTotalItems = (state) =>
+  state.cartSlice.items.reduce((sum, obj) => obj.count + sum, 0);
+export const selectItemById = (id) => (state) => state.cartSlice.items.find((obj) => obj.id === id); //первое значение идет от функции selectItemById потом useSelector передает state
 
 export const { addItem, removeItem, clearItems, minusItem } = cartSlice.actions;
 
