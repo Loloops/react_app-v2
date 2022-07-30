@@ -13,8 +13,6 @@ const Cart = () => {
     totalItems: state.cartSlice.items.reduce((sum, obj) => obj.count + sum, 0),
   }));
 
-  console.log(cartObj);
-
   const clearAll = () => {
     if (window.confirm('Вы действительно хотите очистить корзину?')) {
       dispatch(clearItems());

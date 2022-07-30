@@ -21,6 +21,17 @@ body {
     margin: 15px auto;
   }
 }
+.home-error {
+  text-align: center;
+  padding: 150px 0;
+  & h2 {
+    margin-bottom: 2rem;
+    font-size: 35px;
+  }
+  & p {
+    font-size: 25px;
+  }
+}
 
 .content {
   padding: 40px 0;
