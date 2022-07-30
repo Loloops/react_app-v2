@@ -11,7 +11,8 @@ export const fetchPizzas = createAsyncThunk(
 
     if (data.length === 0) return thunkAPI.rejectWithValue('empty array');
 
-    return thunkAPI.fulfillWithValue(data);
+    // return thunkAPI.fulfillWithValue(data);
+    return data;
   },
 );
 
@@ -30,12 +31,10 @@ const pizzasSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPizzas.pending, (state) => {
-      console.log('pending...');
       state.status = 'loading';
       state.items = [];
     });
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
-      console.log('done!');
       state.items = action.payload;
       state.status = 'success';
     });

@@ -10,7 +10,6 @@ const Header = () => {
   const { totalPrice } = useSelector(selectCart);
   const totalItems = useSelector(selectTotalItems);
   const { pathname } = useLocation();
-  console.log(pathname);
 
   return (
     <div className="header">

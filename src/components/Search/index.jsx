@@ -3,10 +3,16 @@ import lodash from 'lodash';
 
 import styles from './Search.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchValue } from '../../redux/slices/filterSilice';
+import { selectFilter, setSearchValue } from '../../redux/slices/filterSilice';
 
 const Search = () => {
   const [value, setValue] = React.useState('');
+  const { searchValue } = useSelector(selectFilter);
+
+  React.useEffect(() => {
+    setValue(searchValue);
+  }, [searchValue]);
+
   var dispatch = useDispatch();
 
   const inputRef = React.useRef();

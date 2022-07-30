@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FullPizza = () => {
   const { pizzaId } = useParams();
+  const navigate = useNavigate();
   const [pizza, setPizza] = React.useState();
 
   React.useEffect(() => {
@@ -15,7 +16,8 @@ const FullPizza = () => {
         );
         setPizza(data);
       } catch (error) {
-        console.log('Fetch Error');
+        alert(`Ошибка страницы ${error}`);
+        navigate('/');
       }
     }
 
