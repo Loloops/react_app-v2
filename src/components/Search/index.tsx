@@ -33,9 +33,9 @@ const Search: React.FC = () => {
     [],
   );
 
-  const onChangeInput = (e: any) => {
-    setValue(e.target.value);
-    updateSearchValue(e.target.value);
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+    updateSearchValue(event.target.value);
   };
 
   return (
@@ -51,7 +51,7 @@ const Search: React.FC = () => {
         <input
           value={value}
           ref={inputRef}
-          onChange={(e) => onChangeInput(e)}
+          onChange={onChangeInput}
           className={styles.input}
           placeholder="Поиск пиццы..."
         />

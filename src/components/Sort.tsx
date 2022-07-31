@@ -21,7 +21,7 @@ export const sortLists: SortListType[] = [
 
 const Sort: React.FC<SortComponentProps> = ({ value, onClickSort }) => {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
-  const sortRef = React.useRef<HTMLDivElement | null>(null);
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const chooseSort = (sortProp: SortListType): void => {
     onClickSort(sortProp);
@@ -29,10 +29,10 @@ const Sort: React.FC<SortComponentProps> = ({ value, onClickSort }) => {
   };
 
   React.useEffect(() => {
-    const sortEvent = (event: any): void => {
-      let path = event.path || (event.composedPath && event.composedPath());
+    const sortEvent = (event: MouseEvent): void => {
+      let path = event.composedPath?.();
 
-      if (!path.includes(sortRef.current)) {
+      if (sortRef.current && !path.includes(sortRef.current)) {
         setIsVisible(false);
       }
     };
