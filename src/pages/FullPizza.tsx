@@ -3,10 +3,21 @@ import React from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-const FullPizza = () => {
-  const { pizzaId } = useParams();
+interface IPizza {
+  category: number;
+  id: string;
+  imageUrl: string;
+  price: number;
+  rating: 10;
+  sizes: number[];
+  title: string;
+  types: number[];
+}
+
+const FullPizza: React.FC = () => {
+  const { pizzaId } = useParams<string>();
   const navigate = useNavigate();
-  const [pizza, setPizza] = React.useState();
+  const [pizza, setPizza] = React.useState<IPizza>();
 
   React.useEffect(() => {
     async function getPizza() {
@@ -28,12 +39,10 @@ const FullPizza = () => {
     return <div>Загрузка...</div>;
   }
 
-  const { imageUrl, title } = pizza;
-
   return (
     <div className="container">
-      <img src={imageUrl} alt={`pizza-${pizzaId}`} />
-      <h2>{title}</h2>
+      <img src={pizza.imageUrl} alt={`pizza-${pizzaId}`} />
+      <h2>{pizza.title}</h2>
     </div>
   );
 };

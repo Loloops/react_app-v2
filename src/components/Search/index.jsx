@@ -26,7 +26,6 @@ const Search = () => {
   const updateSearchValue = React.useCallback(
     //вернет функцию
     lodash.debounce((value) => {
-      console.log(value);
       dispatch(setSearchValue(value));
     }, 700),
     [],
