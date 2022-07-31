@@ -1,26 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
-// type CartInitItems = {
-//   id: string
-//   imageUrl: string
-//   title: string
-//   price: number
-//   type: string
-//   size: number
-//   count: number
-// }
+type CartInitItems = {
+  id: string;
+  imageUrl: string;
+  title: string;
+  price: number;
+  type: string;
+  size: number;
+  count: number;
+};
 
-// interface CartInitState {
-//   totalPrice: number
-//   items: CartInitItems[]
-// }
+interface CartInitState {
+  totalPrice: number;
+  items: CartInitItems[];
+}
 
-const initialState = {
+const initialState: CartInitState = {
   totalPrice: 0,
   items: [],
 };
 
-const totalPrice = (sum, obj) => {
+const totalPrice = (sum: number, obj: CartInitItems): number => {
   return obj.price * obj.count + sum;
 };
 
@@ -47,7 +48,7 @@ const cartSlice = createSlice({
 
       if (findItem) findItem.count--;
 
-      if (findItem.count < 1) {
+      if (findItem && findItem.count < 1) {
         state.items = state.items.filter((obj) => obj.id !== action.payload);
       }
 
@@ -65,10 +66,13 @@ const cartSlice = createSlice({
   },
 });
 
-export const selectCart = (state) => state.cartSlice;
-export const selectTotalItems = (state) =>
-  state.cartSlice.items.reduce((sum, obj) => obj.count + sum, 0);
-export const selectItemById = (id) => (state) => state.cartSlice.items.find((obj) => obj.id === id); //первое значение идет от функции selectItemById потом useSelector передает state
+export const selectCart = (state: RootState) => state.cartSlice;
+
+export const selectTotalItems = (state: RootState) =>
+  state.cartSlice.items.reduce((sum: number, obj): number => obj.count + sum, 0);
+
+export const selectItemById = (id: string) => (state: RootState) =>
+  state.cartSlice.items.find((obj) => obj.id === id); //первое значение идет от функции selectItemById потом useSelector передает state
 
 export const { addItem, removeItem, clearItems, minusItem } = cartSlice.actions;
 

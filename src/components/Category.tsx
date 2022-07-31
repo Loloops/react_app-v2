@@ -15,7 +15,7 @@ const Category: React.FC<CategoryProp> = ({ value, onClickCategory }) => {
           <li
             key={category}
             onClick={() => onClickCategory(i)}
-            className={value === i ? 'active' : ''}>
+            className={+value === i ? 'active' : ''}>
             {category}
           </li>
         ))}

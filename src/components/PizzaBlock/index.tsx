@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IPizza } from '../../pages/FullPizza';
 import { addItem, selectItemById } from '../../redux/slices/cartSlice';
-import { CartItemProps } from '../Cart/CartItem';
 
 interface CartItemAdd {
   id: string;
@@ -19,7 +18,7 @@ const typeNames: string[] = ['тонкое', 'традиционное'];
 
 const PizzaBlock: React.FC<IPizza> = ({ id, imageUrl, title, types, sizes, price }) => {
   const dispatch = useDispatch();
-  const cartItem: CartItemProps = useSelector(selectItemById(id));
+  const cartItem = useSelector(selectItemById(id));
 
   const addedCount = cartItem ? cartItem.count : 0;
 
