@@ -2,21 +2,32 @@ import React, { useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { IPizza } from '../../pages/FullPizza';
 import { addItem, selectItemById } from '../../redux/slices/cartSlice';
+import { CartItemProps } from '../Cart/CartItem';
 
-const typeNames = ['тонкое', 'традиционное'];
+interface CartItemAdd {
+  id: string;
+  imageUrl: string;
+  title: string;
+  price: number;
+  type: string;
+  size: number;
+}
 
-const PizzaBlock = ({ id, imageUrl, title, types, sizes, price, category, rating }) => {
+const typeNames: string[] = ['тонкое', 'традиционное'];
+
+const PizzaBlock: React.FC<IPizza> = ({ id, imageUrl, title, types, sizes, price }) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector(selectItemById(id));
+  const cartItem: CartItemProps = useSelector(selectItemById(id));
 
   const addedCount = cartItem ? cartItem.count : 0;
 
-  const [type, setType] = useState(0);
-  const [size, setSize] = useState(0);
+  const [type, setType] = useState<number>(0);
+  const [size, setSize] = useState<number>(0);
 
   const onClickAdd = () => {
-    const item = {
+    const item: CartItemAdd = {
       id,
       imageUrl,
       title,

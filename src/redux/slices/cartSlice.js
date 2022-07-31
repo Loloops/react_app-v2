@@ -1,6 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initState = {
+// type CartInitItems = {
+//   id: string
+//   imageUrl: string
+//   title: string
+//   price: number
+//   type: string
+//   size: number
+//   count: number
+// }
+
+// interface CartInitState {
+//   totalPrice: number
+//   items: CartInitItems[]
+// }
+
+const initialState = {
   totalPrice: 0,
   items: [],
 };
@@ -11,7 +26,7 @@ const totalPrice = (sum, obj) => {
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: initState,
+  initialState,
   reducers: {
     addItem: (state, action) => {
       const findItem = state.items.find((obj) => obj.id === action.payload.id);

@@ -19,12 +19,12 @@ import {
 } from '../redux/slices/filterSilice';
 import { fetchPizzas, pizzasSelector } from '../redux/slices/pizzasSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isUrlSearch = React.useRef(false);
-  const isMounted = React.useRef(false);
+  const isUrlSearch = React.useRef<boolean>(false);
+  const isMounted = React.useRef<boolean>(false);
 
   const {
     categoryValue: category,
@@ -36,7 +36,7 @@ const Home = () => {
 
   React.useEffect(() => {
     if (isMounted.current) {
-      const queryString = qs.stringify({
+      const queryString: string = qs.stringify({
         sortProperty: sort.sortProperty,
         categoryValue: category,
         currentPage: page,
@@ -65,12 +65,13 @@ const Home = () => {
   }, []);
 
   const getPizzas = async () => {
-    const filterCategory = category !== 0 ? `category=${category}` : '';
-    const sortBy = sort.sortProperty.includes('-') ? 'asc' : 'desc';
-    const replaceSymbolSort = sort.sortProperty.replace('-', '');
-    const search = searchValue ? `&search=${searchValue}` : '';
+    const filterCategory: string = category !== 0 ? `category=${category}` : '';
+    const sortBy: string = sort.sortProperty.includes('-') ? 'asc' : 'desc';
+    const replaceSymbolSort: string = sort.sortProperty.replace('-', '');
+    const search: string = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         filterCategory,
         sortBy,
@@ -91,7 +92,7 @@ const Home = () => {
     isUrlSearch.current = false;
   }, [category, sort, searchValue, page]);
 
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
   return (

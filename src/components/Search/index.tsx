@@ -5,8 +5,8 @@ import styles from './Search.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter, setSearchValue } from '../../redux/slices/filterSilice';
 
-const Search = () => {
-  const [value, setValue] = React.useState('');
+const Search: React.FC = () => {
+  const [value, setValue] = React.useState<string>('');
   const { searchValue } = useSelector(selectFilter);
 
   React.useEffect(() => {
@@ -15,23 +15,25 @@ const Search = () => {
 
   var dispatch = useDispatch();
 
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onClickClear = () => {
     dispatch(setSearchValue(''));
     setValue('');
-    inputRef.current.focus();
+
+    // if (inputRef.current) inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const updateSearchValue = React.useCallback(
     //вернет функцию
-    lodash.debounce((value) => {
+    lodash.debounce((value: string) => {
       dispatch(setSearchValue(value));
     }, 700),
     [],
   );
 
-  const onChangeInput = (e) => {
+  const onChangeInput = (e: any) => {
     setValue(e.target.value);
     updateSearchValue(e.target.value);
   };

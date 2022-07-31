@@ -1,8 +1,13 @@
 import React from 'react';
 
-const Category = ({ value, onClickCategory }) => {
-  const categoryArray = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+interface CategoryProp {
+  value: number;
+  onClickCategory: (i: number) => void;
+}
 
+const categoryArray: string[] = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+
+const Category: React.FC<CategoryProp> = ({ value, onClickCategory }) => {
   return (
     <div className="categories">
       <ul>

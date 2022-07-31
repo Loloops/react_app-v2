@@ -3,12 +3,12 @@ import React from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-interface IPizza {
+export interface IPizza {
   category: number;
   id: string;
   imageUrl: string;
   price: number;
-  rating: 10;
+  rating: string;
   sizes: number[];
   title: string;
   types: number[];

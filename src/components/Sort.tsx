@@ -1,6 +1,16 @@
 import React from 'react';
 
-export const sortLists = [
+interface SortListType {
+  name: string;
+  sortProperty: string;
+}
+
+interface SortComponentProps {
+  value: SortListType;
+  onClickSort: (sortProp: SortListType) => void;
+}
+
+export const sortLists: SortListType[] = [
   { name: 'популярности (убыв.)', sortProperty: 'rating' },
   { name: 'популярности (возраст.)', sortProperty: '-rating' },
   { name: 'цене (убыв.)', sortProperty: 'price' },
@@ -9,17 +19,17 @@ export const sortLists = [
   { name: 'алфавиту (возраст.)', sortProperty: '-title' },
 ];
 
-const Sort = ({ value, onClickSort }) => {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const sortRef = React.useRef();
+const Sort: React.FC<SortComponentProps> = ({ value, onClickSort }) => {
+  const [isVisible, setIsVisible] = React.useState<boolean>(false);
+  const sortRef = React.useRef<HTMLDivElement | null>(null);
 
-  const chooseSort = (sortProp) => {
+  const chooseSort = (sortProp: SortListType): void => {
     onClickSort(sortProp);
     setIsVisible(false);
   };
 
   React.useEffect(() => {
-    const sortEvent = (event) => {
+    const sortEvent = (event: any): void => {
       let path = event.path || (event.composedPath && event.composedPath());
 
       if (!path.includes(sortRef.current)) {
@@ -52,9 +62,9 @@ const Sort = ({ value, onClickSort }) => {
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {sortLists.map((obj, i) => (
+            {sortLists.map((obj: SortListType, i: number) => (
               <li
-                onClick={() => chooseSort(obj)}
+                onClick={(): void => chooseSort(obj)}
                 key={i}
                 className={value.sortProperty === obj.sortProperty ? 'active' : ''}>
                 {obj.name}

@@ -1,12 +1,12 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import pizzaLogo from '../assets/img/pizza-logo.svg';
 import Search from './Search';
 import { selectCart, selectTotalItems } from '../redux/slices/cartSlice';
+import React from 'react';
 
-const Header = () => {
+const Header: React.FC = () => {
   const { totalPrice } = useSelector(selectCart);
   const totalItems = useSelector(selectTotalItems);
   const { pathname } = useLocation();
