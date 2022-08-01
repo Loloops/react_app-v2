@@ -1,22 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
+import { IFilterInitState, TInitSortObject } from './filterType';
 
-type InitSortObject = {
-  name: string;
-  sortProperty: string;
-};
-
-interface IFilterInitState {
-  searchValue: string;
-  categoryValue: number;
-  currentPage: number;
-  sortObj: InitSortObject;
-}
-
-const initState: IFilterInitState = {
+const initialState: IFilterInitState = {
   searchValue: '',
   categoryValue: 0, //
-  currentPage: 1, //
+  currentPage: '1', //
   sortObj: {
     name: 'популярности (убыв.)',
     sortProperty: 'rating',
@@ -25,23 +14,23 @@ const initState: IFilterInitState = {
 
 const filterSlice = createSlice({
   name: 'filter',
-  initialState: initState,
+  initialState,
   reducers: {
-    setCategory: (state, action) => {
+    setCategory: (state, action: PayloadAction<number>) => {
       state.categoryValue = action.payload;
     },
-    setSort: (state, action) => {
+    setSort: (state, action: PayloadAction<TInitSortObject>) => {
       state.sortObj = action.payload;
     },
-    setCurrentPage: (state, action) => {
+    setCurrentPage: (state, action: PayloadAction<string>) => {
       state.currentPage = action.payload;
     },
     setFilters: (state, action) => {
       state.sortObj = action.payload.sortObj;
       state.categoryValue = +action.payload.categoryValue;
-      state.currentPage = +action.payload.currentPage;
+      state.currentPage = action.payload.currentPage;
     },
-    setSearchValue: (state, action) => {
+    setSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
   },

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import filterSilice from './slices/filterSilice';
-import cartSlice from './slices/cartSlice';
+import filterSilice from './slices/filter/filterSilice';
+import cartSlice from './slices/cart/cartSlice';
 import pizzasSlice from './slices/pizzasSlice';
 
 export const store = configureStore({

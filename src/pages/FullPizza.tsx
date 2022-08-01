@@ -2,17 +2,7 @@ import axios from 'axios';
 import React from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
-
-export interface IPizza {
-  category: number;
-  id: string;
-  imageUrl: string;
-  price: number;
-  rating: string;
-  sizes: number[];
-  title: string;
-  types: number[];
-}
+import { IPizza } from '../utils/componentTypes';
 
 const FullPizza: React.FC = () => {
   const { pizzaId } = useParams<string>();

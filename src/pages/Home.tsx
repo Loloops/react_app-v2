@@ -16,7 +16,7 @@ import {
   setCurrentPage,
   setFilters,
   selectFilter,
-} from '../redux/slices/filterSilice';
+} from '../redux/slices/filter/filterSilice';
 import { fetchPizzas, pizzasSelector } from '../redux/slices/pizzasSlice';
 
 const Home: React.FC = () => {
@@ -53,12 +53,14 @@ const Home: React.FC = () => {
       const params = qs.parse(window.location.search.substring(1));
       const sortObj = sortLists.find((obj) => obj.sortProperty === params.sortProperty);
 
-      dispatch(
-        setFilters({
-          ...params,
-          sortObj,
-        }),
-      );
+      if (params && sortObj) {
+        dispatch(
+          setFilters({
+            ...params,
+            sortObj,
+          }),
+        );
+      }
 
       isUrlSearch.current = true;
     }
@@ -111,7 +113,7 @@ const Home: React.FC = () => {
 
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
-          <Pagination onChangePage={(number) => dispatch(setCurrentPage(number))} />
+          <Pagination onChangePage={(number) => dispatch(setCurrentPage(number.toString()))} />
         </>
       )}
     </div>

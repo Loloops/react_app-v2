@@ -3,7 +3,7 @@ import lodash from 'lodash';
 
 import styles from './Search.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilter, setSearchValue } from '../../redux/slices/filterSilice';
+import { selectFilter, setSearchValue } from '../../redux/slices/filter/filterSilice';
 
 const Search: React.FC = () => {
   const [value, setValue] = React.useState<string>('');

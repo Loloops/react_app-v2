@@ -2,17 +2,9 @@ import React, { useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { IPizza } from '../../pages/FullPizza';
-import { addItem, selectItemById } from '../../redux/slices/cartSlice';
-
-interface CartItemAdd {
-  id: string;
-  imageUrl: string;
-  title: string;
-  price: number;
-  type: string;
-  size: number;
-}
+import { IPizza } from '../../utils/componentTypes';
+import { addItem, selectItemById } from '../../redux/slices/cart/cartSlice';
+import { ICartItemAdd } from '../../utils/componentTypes';
 
 const typeNames: string[] = ['тонкое', 'традиционное'];
 
@@ -26,7 +18,7 @@ const PizzaBlock: React.FC<IPizza> = ({ id, imageUrl, title, types, sizes, price
   const [size, setSize] = useState<number>(0);
 
   const onClickAdd = () => {
-    const item: CartItemAdd = {
+    const item: ICartItemAdd = {
       id,
       imageUrl,
       title,
