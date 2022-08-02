@@ -9,7 +9,7 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort, { sortLists } from '../components/Sort';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   setCategory,
   setSort,
@@ -18,10 +18,11 @@ import {
   selectFilter,
 } from '../redux/slices/filter/filterSilice';
 import { fetchPizzas, pizzasSelector } from '../redux/slices/pizzasSlice';
+import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const isUrlSearch = React.useRef<boolean>(false);
   const isMounted = React.useRef<boolean>(false);
@@ -73,7 +74,6 @@ const Home: React.FC = () => {
     const search: string = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         filterCategory,
         sortBy,
@@ -99,7 +99,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="container">
-      {status === 'error' ? (
+      {status === 'fetch error' ? (
         <div className="home-error">
           <h2>Непредвиденная ошибка или пиццы не найдены 😕</h2>
           <p>попробуйте найти что то другое или зайдите на сайт позже</p>
