@@ -9,7 +9,6 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort, { sortLists } from '../components/Sort';
 
-import { useSelector } from 'react-redux';
 import {
   setCategory,
   setSort,
@@ -18,7 +17,11 @@ import {
   selectFilter,
 } from '../redux/slices/filter/filterSilice';
 import { fetchPizzas, pizzasSelector } from '../redux/slices/pizzasSlice';
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { IFilter, TInitSortObject } from '../redux/slices/filter/filterType';
+
+
+
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -27,13 +30,13 @@ const Home: React.FC = () => {
   const isUrlSearch = React.useRef<boolean>(false);
   const isMounted = React.useRef<boolean>(false);
 
-  const {
+  let {
     categoryValue: category,
     currentPage: page,
     sortObj: sort,
     searchValue,
-  } = useSelector(selectFilter);
-  const { items, status } = useSelector(pizzasSelector);
+  } = useAppSelector(selectFilter);
+  const { items, status } = useAppSelector(pizzasSelector);
 
   React.useEffect(() => {
     if (isMounted.current) {
@@ -51,10 +54,10 @@ const Home: React.FC = () => {
 
   React.useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params = (qs.parse(window.location.search.substring(1)) as unknown) as IFilter;
       const sortObj = sortLists.find((obj) => obj.sortProperty === params.sortProperty);
 
-      if (params && sortObj) {
+      if (sortObj){
         dispatch(
           setFilters({
             ...params,
@@ -62,13 +65,13 @@ const Home: React.FC = () => {
           }),
         );
       }
-
+        
       isUrlSearch.current = true;
     }
   }, []);
 
   const getPizzas = async () => {
-    const filterCategory: string = category !== 0 ? `category=${category}` : '';
+    const filterCategory: string = +category !== 0 ? `category=${category}` : '';
     const sortBy: string = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const replaceSymbolSort: string = sort.sortProperty.replace('-', '');
     const search: string = searchValue ? `&search=${searchValue}` : '';
@@ -107,7 +110,10 @@ const Home: React.FC = () => {
       ) : (
         <>
           <div className="content__top">
-            <Category value={category} onClickCategory={(i) => dispatch(setCategory(i))} />
+            <Category
+              value={+category}
+              onClickCategory={(i) => dispatch(setCategory(i.toString()))}
+            />
             <Sort value={sort} onClickSort={(sortObj) => dispatch(setSort(sortObj))} />
           </div>
 
