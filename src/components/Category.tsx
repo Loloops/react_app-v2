@@ -7,7 +7,7 @@ interface CategoryProp {
 
 const categoryArray: string[] = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-const Category: React.FC<CategoryProp> = ({ value, onClickCategory }) => {
+const Category: React.FC<CategoryProp> = React.memo(({ value, onClickCategory }) => {
   return (
     <div className="categories">
       <ul>
@@ -22,6 +22,6 @@ const Category: React.FC<CategoryProp> = ({ value, onClickCategory }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default Category;

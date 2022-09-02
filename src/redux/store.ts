@@ -2,7 +2,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import filterSilice from './slices/filter/filterSilice';
 import cartSlice from './slices/cart/cartSlice';
-import pizzasSlice from './slices/pizzasSlice';
+import pizzasSlice from './slices/pizzas/pizzasSlice';
 
 export const store = configureStore({
   reducer: {

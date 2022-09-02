@@ -1,9 +1,5 @@
 import React from 'react';
-
-interface SortListType {
-  name: string;
-  sortProperty: string;
-}
+import { SortListType } from '../utils/componentTypes';
 
 interface SortComponentProps {
   value: SortListType;
@@ -19,7 +15,7 @@ export const sortLists: SortListType[] = [
   { name: 'алфавиту (возраст.)', sortProperty: '-title' },
 ];
 
-const Sort: React.FC<SortComponentProps> = ({ value, onClickSort }) => {
+const Sort: React.FC<SortComponentProps> = React.memo(({ value, onClickSort }) => {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
   const sortRef = React.useRef<HTMLDivElement>(null);
 
@@ -75,6 +71,6 @@ const Sort: React.FC<SortComponentProps> = ({ value, onClickSort }) => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

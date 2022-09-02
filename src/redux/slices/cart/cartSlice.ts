@@ -1,15 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
-import { ICartInitItem, ICartItemAdd } from './cartType';
-
-interface ICartInitState {
-  totalPrice: number;
-  items: ICartInitItem[];
-}
+import { getAllPricesFromLs, getCartFromLS } from '../../../utils/getItemsFromLS';
+import { ICartInitItem, ICartInitState, ICartItemAdd } from './cartType';
 
 const initialState: ICartInitState = {
-  totalPrice: 0,
-  items: [],
+  totalPrice: getAllPricesFromLs(),
+  items: getCartFromLS(),
 };
 
 const totalPrice = (sum: number, obj: ICartInitItem): number => {
@@ -56,14 +51,6 @@ const cartSlice = createSlice({
     },
   },
 });
-
-export const selectCart = (state: RootState) => state.cartSlice;
-
-export const selectTotalItems = (state: RootState) =>
-  state.cartSlice.items.reduce((sum: number, obj): number => obj.count + sum, 0);
-
-export const selectItemById = (id: string) => (state: RootState) =>
-  state.cartSlice.items.find((obj) => obj.id === id); //первое значение идет от функции selectItemById потом useSelector передает state
 
 export const { addItem, removeItem, clearItems, minusItem } = cartSlice.actions;
 

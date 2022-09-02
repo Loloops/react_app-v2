@@ -21,3 +21,8 @@ export interface ICartItemAdd {
 export interface ICartItemProps extends ICartItemAdd {
   count: number;
 }
+
+export interface SortListType {
+  name: string;
+  sortProperty: string;
+}

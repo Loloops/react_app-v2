@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IPizza } from '../../utils/componentTypes';
-import { addItem, selectItemById } from '../../redux/slices/cart/cartSlice';
+import { selectItemById } from '../../redux/slices/cart/cartSelectors';
 import { ICartItemAdd } from '../../utils/componentTypes';
+import { addItem } from '../../redux/slices/cart/cartSlice';
 
 const typeNames: string[] = ['тонкое', 'традиционное'];
 
@@ -35,8 +36,8 @@ const PizzaBlock: React.FC<IPizza> = ({ id, imageUrl, title, types, sizes, price
       <div className="pizza-block">
         <Link to={`pizza/${id}`}>
           <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+          <h4 className="pizza-block__title">{title}</h4>
         </Link>
-        <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
             {types.map((typeId, i) => (

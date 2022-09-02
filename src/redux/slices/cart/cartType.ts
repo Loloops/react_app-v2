@@ -10,3 +10,8 @@ export interface ICartItemAdd {
 export interface ICartInitItem extends ICartItemAdd {
   count: number;
 }
+
+export interface ICartInitState {
+  totalPrice: number;
+  items: ICartInitItem[];
+}

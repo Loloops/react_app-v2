@@ -14,29 +14,27 @@ import {
   setSort,
   setCurrentPage,
   setFilters,
-  selectFilter,
 } from '../redux/slices/filter/filterSilice';
-import { fetchPizzas, pizzasSelector } from '../redux/slices/pizzasSlice';
+import { fetchPizzas } from '../redux/slices/pizzas/pizzasSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
-import { IFilter, TInitSortObject } from '../redux/slices/filter/filterType';
-
-
-
+import { IFilter } from '../redux/slices/filter/filterType';
+import { selectFilter } from '../redux/slices/filter/filterSelector';
+import { pizzasSelector } from '../redux/slices/pizzas/pizzasSelectors';
+import { SortListType } from '../utils/componentTypes';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const isUrlSearch = React.useRef<boolean>(false);
-  const isMounted = React.useRef<boolean>(false);
-
-  let {
+  const {
     categoryValue: category,
     currentPage: page,
     sortObj: sort,
     searchValue,
   } = useAppSelector(selectFilter);
   const { items, status } = useAppSelector(pizzasSelector);
+
+  const isUrlSearch = React.useRef<boolean>(false);
+  const isMounted = React.useRef<boolean>(false);
 
   React.useEffect(() => {
     if (isMounted.current) {
@@ -54,10 +52,10 @@ const Home: React.FC = () => {
 
   React.useEffect(() => {
     if (window.location.search) {
-      const params = (qs.parse(window.location.search.substring(1)) as unknown) as IFilter;
+      const params = qs.parse(window.location.search.substring(1)) as unknown as IFilter;
       const sortObj = sortLists.find((obj) => obj.sortProperty === params.sortProperty);
 
-      if (sortObj){
+      if (sortObj) {
         dispatch(
           setFilters({
             ...params,
@@ -65,7 +63,7 @@ const Home: React.FC = () => {
           }),
         );
       }
-        
+
       isUrlSearch.current = true;
     }
   }, []);
@@ -100,6 +98,14 @@ const Home: React.FC = () => {
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
+  const onChangeCategory = React.useCallback((i: number) => {
+    dispatch(setCategory(i.toString()));
+  }, []);
+
+  const onChangeSort = React.useCallback((sortObj: SortListType) => {
+    dispatch(setSort(sortObj));
+  }, []);
+
   return (
     <div className="container">
       {status === 'fetch error' ? (
@@ -110,11 +116,8 @@ const Home: React.FC = () => {
       ) : (
         <>
           <div className="content__top">
-            <Category
-              value={+category}
-              onClickCategory={(i) => dispatch(setCategory(i.toString()))}
-            />
-            <Sort value={sort} onClickSort={(sortObj) => dispatch(setSort(sortObj))} />
+            <Category value={+category} onClickCategory={onChangeCategory} />
+            <Sort value={sort} onClickSort={onChangeSort} />
           </div>
 
           <h2 className="content__title">Все пиццы</h2>

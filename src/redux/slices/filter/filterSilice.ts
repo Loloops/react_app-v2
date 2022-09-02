@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
 import { IFilterInitState, ISetFilterAction, TInitSortObject } from './filterType';
 
 const initialState: IFilterInitState = {
@@ -35,8 +34,6 @@ const filterSlice = createSlice({
     },
   },
 });
-
-export const selectFilter = (state: RootState) => state.filterSilice;
 
 export const { setCategory, setSort, setCurrentPage, setFilters, setSearchValue } =
   filterSlice.actions;
