@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { IPizza } from '../../utils/componentTypes';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { selectItemById } from '../../redux/slices/cart/cartSelectors';
-import { ICartItemAdd } from '../../utils/componentTypes';
 import { addItem } from '../../redux/slices/cart/cartSlice';
+
+import { IPizza, ICartItemAdd } from '../../utils/componentTypes';
 
 const typeNames: string[] = ['тонкое', 'традиционное'];
 
-const PizzaBlock: React.FC<IPizza> = ({ id, imageUrl, title, types, sizes, price }) => {
+export const PizzaBlock: React.FC<IPizza> = ({ id, imageUrl, title, types, sizes, price }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectItemById(id));
 
@@ -86,5 +87,3 @@ const PizzaBlock: React.FC<IPizza> = ({ id, imageUrl, title, types, sizes, price
     </div>
   );
 };
-
-export default PizzaBlock;

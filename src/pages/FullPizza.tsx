@@ -1,7 +1,9 @@
-import axios from 'axios';
 import React from 'react';
 
+import axios from 'axios';
+
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { IPizza } from '../utils/componentTypes';
 
 const FullPizza: React.FC = () => {

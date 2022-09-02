@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { SortListType } from '../utils/componentTypes';
 
 interface SortComponentProps {
@@ -15,7 +16,7 @@ export const sortLists: SortListType[] = [
   { name: 'алфавиту (возраст.)', sortProperty: '-title' },
 ];
 
-const Sort: React.FC<SortComponentProps> = React.memo(({ value, onClickSort }) => {
+export const Sort: React.FC<SortComponentProps> = React.memo(({ value, onClickSort }) => {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
   const sortRef = React.useRef<HTMLDivElement>(null);
 
@@ -72,5 +73,3 @@ const Sort: React.FC<SortComponentProps> = React.memo(({ value, onClickSort }) =
     </div>
   );
 });
-
-export default Sort;

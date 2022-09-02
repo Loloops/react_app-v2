@@ -1,13 +1,8 @@
 import React from 'react';
 
-import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { SortListType } from '../utils/componentTypes';
 
-import Category from '../components/Category';
-import Pagination from '../components/Pagination';
-import PizzaBlock from '../components/PizzaBlock';
-import Skeleton from '../components/PizzaBlock/Skeleton';
-import Sort, { sortLists } from '../components/Sort';
+import { useNavigate } from 'react-router-dom';
 
 import {
   setCategory,
@@ -20,7 +15,10 @@ import { useAppDispatch, useAppSelector } from '../redux/store';
 import { IFilter } from '../redux/slices/filter/filterType';
 import { selectFilter } from '../redux/slices/filter/filterSelector';
 import { pizzasSelector } from '../redux/slices/pizzas/pizzasSelectors';
-import { SortListType } from '../utils/componentTypes';
+
+import { Category, Pagination, PizzaBlock, Skeleton, Sort, sortLists } from '../components';
+
+import qs from 'qs';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
